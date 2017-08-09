@@ -25,5 +25,8 @@ public class Application {
         for (User user : users) {
             System.out.println(user.toString());
         }
+        System.out.println(userService.findById(0).toString());
+        System.out.println(userService.tryRemove(0));
+        System.out.println(userService.tryRemove(0));
     }
 }
