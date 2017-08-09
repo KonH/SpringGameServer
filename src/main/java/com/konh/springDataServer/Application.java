@@ -1,14 +1,12 @@
 package com.konh.springDataServer;
 
-import com.konh.springDataServer.Models.User;
 import com.konh.springDataServer.Services.UserService.IUserService;
 import com.konh.springDataServer.Services.UserService.InMemoryUserService;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 
-import java.util.ArrayList;
-
-@Configuration
+@SpringBootApplication
 public class Application {
 
     @Bean
@@ -17,16 +15,6 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context =
-                new AnnotationConfigApplicationContext(Application.class);
-        IUserService userService = context.getBean(IUserService.class);
-        userService.add(new User(0, "test"));
-        ArrayList<User> users = userService.getAll();
-        for (User user : users) {
-            System.out.println(user.toString());
-        }
-        System.out.println(userService.findById(0).toString());
-        System.out.println(userService.tryRemove(0));
-        System.out.println(userService.tryRemove(0));
+        SpringApplication.run(Application.class, args);
     }
 }
