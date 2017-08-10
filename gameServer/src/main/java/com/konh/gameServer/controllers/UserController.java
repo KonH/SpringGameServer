@@ -46,8 +46,8 @@ public class UserController {
 		};
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	Callable<ResponseEntity> remove(@RequestParam(name = "id") Long id) {
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	Callable<ResponseEntity> remove(@PathVariable Long id) {
 		return () -> {
 			if (!repository.exists(id)) {
 				return ResponseEntity.notFound().build();
