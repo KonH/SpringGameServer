@@ -17,12 +17,12 @@ public class UserController {
 	@Autowired
 	private UserRepository repository;
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<Iterable<User>> getAll() {
 		return () -> repository.findAll();
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<ResponseEntity<User>> getOne(@PathVariable Long id) {
 		return () -> {
 			User user = repository.findOne(id);
@@ -33,7 +33,7 @@ public class UserController {
 		};
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping()
 	Callable<ResponseEntity> add(@RequestBody User user) {
 		return () -> {
 			if (user == null) {
@@ -42,11 +42,12 @@ public class UserController {
 			User savedUser = repository.save(user);
 			Long id = savedUser.getId();
 			URI uri = new URI("users/" + id.toString());
+			System.out.println("New user: " + uri);
 			return ResponseEntity.created(uri).build();
 		};
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "{id}")
 	Callable<ResponseEntity> remove(@PathVariable Long id) {
 		return () -> {
 			if (!repository.exists(id)) {
@@ -57,7 +58,7 @@ public class UserController {
 		};
 	}
 
-	@RequestMapping(method = RequestMethod.PATCH)
+	@PatchMapping()
 	Callable<ResponseEntity> update(@RequestBody User user) {
 		return () -> {
 			if (user == null) {

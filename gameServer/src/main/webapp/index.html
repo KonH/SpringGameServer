@@ -10,7 +10,8 @@
 <body>
 	<script type="text/javascript" src="webjars/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<h1>Spring Game Server</h1>
+	<script type="text/javascript" src="js/userController.js"></script>
+    <h1>Spring Game Server</h1>
 	<div id="navbar" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -28,5 +29,16 @@
             </ul>
 		</div>
 	</div>
+    <div style="padding:10px;">
+        <div class="input-group">
+            <input id="user-name" type="text" class="form-control" placeholder="Username">
+            <button type="button" class="btn btn-default" onclick="addUser()">Add</button>
+            <button type="button" class="btn btn-default" onclick="loadUsers()">Update</button>
+        </div>
+    </div>
+    <h3>Users:</h3>
+    <ul id="user-list">
+    </ul>
+    <script>loadUsers();</script>
 </body>
 </html>
