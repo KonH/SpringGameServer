@@ -3,7 +3,7 @@ function addUser() {
     var name = nameInput.value;
     var user = { "name": name };
     var userContent = JSON.stringify(user);
-    $.ajax({
+    jQuery.ajax({
         type: "POST",
         url: "/users",
         data: userContent,
@@ -15,7 +15,7 @@ function addUser() {
     });
 }
 function loadUsers() {
-    $.ajax({
+    jQuery.ajax({
         type: "GET",
         url: "/users",
         contentType: "application/json; charset=utf-8",

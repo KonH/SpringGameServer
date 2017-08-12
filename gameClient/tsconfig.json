@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
 		"target": "es5",
-		"module": "commonjs",
 		"sourceMap": false,
 		"outDir": "../gameServer/src/main/webapp/js",
 		"lib": [
