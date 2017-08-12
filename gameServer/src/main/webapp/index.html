@@ -11,7 +11,7 @@
 	<script> var exports = {}; </script>
 	<script type="text/javascript" src="webjars/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/userController.js"></script>
+
 	<h1>Spring Game Server</h1>
 	<div id="navbar" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
@@ -49,12 +49,13 @@
 	<div style="container">
 		<div class="container input-group">
 			<input id="user-name" type="text" class="form-control" placeholder="Username">
-			<button id="user-add-btn" type="button" class="btn btn-default" onclick="addUser()">Add</button>
-			<button id="user-update-btn" type="button" class="btn btn-default" onclick="updateCurrentUser()">Update</button>
-			<button type="button" class="btn btn-default" onclick="loadUsers()">Refresh</button>
+			<button id="user-add-btn" type="button" class="btn btn-default">Add</button>
+			<button id="user-update-btn" type="button" class="btn btn-default">Update</button>
+			<button id="user-refresh-btn" type="button" class="btn btn-default">Refresh</button>
 		</div>
 	</div>
+    <script type="text/javascript" src="js/user.js"></script>
+    <script type="text/javascript" src="js/userController.js"></script>
 
-	<script>initUsers();</script>
 </body>
 </html>
