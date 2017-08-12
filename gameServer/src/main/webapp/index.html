@@ -30,16 +30,29 @@
             </ul>
 		</div>
 	</div>
-    <div style="padding:10px;">
-        <div class="input-group">
+
+    <div class="container">
+        <h2>Users</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody id="user-list">
+            </tbody>
+        </table>
+    </div>
+
+    <div style="container">
+        <div class="container input-group">
             <input id="user-name" type="text" class="form-control" placeholder="Username">
             <button type="button" class="btn btn-default" onclick="addUser()">Add</button>
             <button type="button" class="btn btn-default" onclick="loadUsers()">Update</button>
         </div>
     </div>
-    <h3>Users:</h3>
-    <ul id="user-list">
-    </ul>
+
     <script>loadUsers();</script>
 </body>
 </html>

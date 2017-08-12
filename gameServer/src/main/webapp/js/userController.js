@@ -30,8 +30,14 @@ function onUsersRetrieved(users) {
     }
     users.forEach(function (user) { appendUser(list, user); });
 }
+function appendUserContent(row, content) {
+    var item = document.createElement("td");
+    item.innerText = content;
+    row.appendChild(item);
+}
 function appendUser(list, user) {
-    var li = document.createElement("li");
-    li.innerText = user["name"];
-    list.appendChild(li);
+    var row = document.createElement("tr");
+    appendUserContent(row, user["id"]);
+    appendUserContent(row, user["name"]);
+    list.appendChild(row);
 }
