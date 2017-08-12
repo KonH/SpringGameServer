@@ -69,6 +69,7 @@ public class UserController {
 			}
 			User localUser = repository.findOne(user.getId());
 			localUser.setName(user.getName());
+			localUser.setItems(user.getItems());
 			repository.save(localUser);
 			return ResponseEntity.ok().build();
 		};

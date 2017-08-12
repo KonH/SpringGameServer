@@ -38,6 +38,7 @@
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
+                <th>Items</th>
 				<th>Controls</th>
 			</tr>
 			</thead>
@@ -47,13 +48,16 @@
 	</div>
 
 	<div style="container">
-		<div class="container input-group">
+		<div class="container input-group" style="max-width: 400px; margin-left: 60px">
 			<input id="user-name" type="text" class="form-control" placeholder="Username">
-			<button id="user-add-btn" type="button" class="btn btn-default">Add</button>
-			<button id="user-update-btn" type="button" class="btn btn-default">Update</button>
+			<table id="user-items"></table>
+            <button id="user-add-item-btn" type="button" class="btn btn-default">+</button>
+            <button id="user-add-btn" type="button" class="btn btn-default">Add</button>
+            <button id="user-update-btn" type="button" class="btn btn-default">Update</button>
 			<button id="user-refresh-btn" type="button" class="btn btn-default">Refresh</button>
 		</div>
 	</div>
+    <script type="text/javascript" src="js/item.js"></script>
     <script type="text/javascript" src="js/user.js"></script>
     <script type="text/javascript" src="js/userController.js"></script>
 
