@@ -20,6 +20,10 @@ public class User {
 
 	public User() {}
 
+	public User(String name) {
+		this.name = name;
+	}
+
 	public User(String name, List<Item> items) {
 		this.name = name;
 		this.items = items;
