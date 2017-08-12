@@ -8,11 +8,11 @@
 		  href="webjars/bootstrap/3.0.3/css/bootstrap.min.css" />
 </head>
 <body>
-    <script> var exports = {}; </script>
+	<script> var exports = {}; </script>
 	<script type="text/javascript" src="webjars/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/userController.js"></script>
-    <h1>Spring Game Server</h1>
+	<h1>Spring Game Server</h1>
 	<div id="navbar" class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -25,34 +25,36 @@
 			<ul class="nav navbar-nav">
 				<li><a href="./"> Home </a></li>
 			</ul>
-            <ul class="nav navbar-nav">
-                <li><a href="./"> Users </a></li>
-            </ul>
+			<ul class="nav navbar-nav">
+				<li><a href="./"> Users </a></li>
+			</ul>
 		</div>
 	</div>
 
-    <div class="container">
-        <h2>Users</h2>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody id="user-list">
-            </tbody>
-        </table>
-    </div>
+	<div class="container">
+		<h2>Users</h2>
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Controls</th>
+			</tr>
+			</thead>
+			<tbody id="user-list">
+			</tbody>
+		</table>
+	</div>
 
-    <div style="container">
-        <div class="container input-group">
-            <input id="user-name" type="text" class="form-control" placeholder="Username">
-            <button type="button" class="btn btn-default" onclick="addUser()">Add</button>
-            <button type="button" class="btn btn-default" onclick="loadUsers()">Update</button>
-        </div>
-    </div>
+	<div style="container">
+		<div class="container input-group">
+			<input id="user-name" type="text" class="form-control" placeholder="Username">
+			<button id="user-add-btn" type="button" class="btn btn-default" onclick="addUser()">Add</button>
+			<button id="user-update-btn" type="button" class="btn btn-default" onclick="updateCurrentUser()">Update</button>
+			<button type="button" class="btn btn-default" onclick="loadUsers()">Refresh</button>
+		</div>
+	</div>
 
-    <script>loadUsers();</script>
+	<script>initUsers();</script>
 </body>
 </html>
