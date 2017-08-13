@@ -26,6 +26,32 @@ public class UserController {
 		System.out.println();
 	}
 
+	boolean isValidString(String string) {
+		return (string != null) && !string.isEmpty();
+	}
+
+	boolean isValidUser(User user) {
+		if (!isValidString(user.getName())) {
+			return false;
+		}
+		List<Item> items = user.getItems();
+		if (items == null) {
+			return false;
+		}
+		for (Item item : items) {
+			if (item == null) {
+				return false;
+			}
+			if (!isValidString(item.getName())) {
+				return false;
+			}
+			if (item.getCount() <= 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<Iterable<User>> getAll() {
 		return () -> repository.findAll();
@@ -49,6 +75,9 @@ public class UserController {
 				return ResponseEntity.badRequest().build();
 			}
 			logUserState("User to add", user);
+			if (!isValidUser(user)) {
+				return ResponseEntity.badRequest().body("User is invalid!");
+			}
 			User savedUser = repository.save(user);
 			logUserState("Saved user", savedUser);
 			Long id = savedUser.getId();
@@ -84,6 +113,9 @@ public class UserController {
 				return ResponseEntity.notFound().build();
 			}
 			logUserState("User to update", user);
+			if (!isValidUser(user)) {
+				return ResponseEntity.badRequest().body("User is invalid!");
+			}
 			User localUser = repository.findOne(user.getId());
 			logUserState("User in repository", localUser);
 			localUser.setName(user.getName());
