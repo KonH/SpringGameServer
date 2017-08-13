@@ -5,7 +5,6 @@ import com.konh.gameServer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -18,30 +17,11 @@ public class UserController {
 	@Autowired
 	private UserRepository repository;
 
-	@Secured("ADMIN")
-	@GetMapping(value = "init", produces = MediaType.TEXT_PLAIN_VALUE)
-	Callable<ResponseEntity> init() {
-		return () ->
-		{
-			try {
-				User admin = new User("admin");
-				add(admin).call();
-				User user = new User("user");
-				add(user).call();
-				return ResponseEntity.ok("initialized");
-			} catch (Exception e) {
-				return ResponseEntity.badRequest().body("Exception: " + e.toString());
-			}
-		};
-	}
-
-	@Secured("USER")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<Iterable<User>> getAll() {
 		return () -> repository.findAll();
 	}
 
-	@Secured("USER")
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<ResponseEntity<User>> getOne(@PathVariable Long id) {
 		return () -> {
@@ -53,7 +33,6 @@ public class UserController {
 		};
 	}
 
-	@Secured("ADMIN")
 	@PostMapping()
 	Callable<ResponseEntity> add(@RequestBody User user) {
 		return () -> {
@@ -68,7 +47,6 @@ public class UserController {
 		};
 	}
 
-	@Secured("ADMIN")
 	@DeleteMapping(value = "{id}")
 	Callable<ResponseEntity> remove(@PathVariable Long id) {
 		return () -> {
@@ -80,7 +58,6 @@ public class UserController {
 		};
 	}
 
-	@Secured("ADMIN")
 	@PatchMapping()
 	Callable<ResponseEntity> update(@RequestBody User user) {
 		return () -> {
