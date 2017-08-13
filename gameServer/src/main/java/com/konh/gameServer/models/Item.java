@@ -16,11 +16,20 @@ public class Item {
 	@Column(name = "count")
 	private int count;
 
-	public Item() { }
+	public Item() {
+	}
 
 	public Item(String name, int count) {
 		this.name = name;
 		this.count = count;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
