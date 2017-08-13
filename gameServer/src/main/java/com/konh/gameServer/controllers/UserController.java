@@ -2,7 +2,7 @@ package com.konh.gameServer.controllers;
 
 import com.konh.gameServer.models.Item;
 import com.konh.gameServer.models.User;
-import com.konh.gameServer.repositories.UserRepository;
+import com.konh.gameServer.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 @RestController
@@ -17,52 +18,19 @@ import java.util.concurrent.Callable;
 public class UserController {
 
 	@Autowired
-	private UserRepository repository;
-
-	void logUserState(String message, User user) {
-		System.out.println();
-		System.out.println(message + ":");
-		System.out.println(user.toString());
-		System.out.println();
-	}
-
-	boolean isValidString(String string) {
-		return (string != null) && !string.isEmpty();
-	}
-
-	boolean isValidUser(User user) {
-		if (!isValidString(user.getName())) {
-			return false;
-		}
-		List<Item> items = user.getItems();
-		if (items == null) {
-			return false;
-		}
-		for (Item item : items) {
-			if (item == null) {
-				return false;
-			}
-			if (!isValidString(item.getName())) {
-				return false;
-			}
-			if (item.getCount() <= 0) {
-				return false;
-			}
-		}
-		return true;
-	}
+	private UserService service;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<Iterable<User>> getAll() {
-		return () -> repository.findAll();
+		return () -> service.getAll();
 	}
 
 	@GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	Callable<ResponseEntity<User>> getOne(@PathVariable Long id) {
 		return () -> {
-			User user = repository.findOne(id);
-			if (user != null) {
-				return ResponseEntity.ok().body(user);
+			Optional<User> user = service.getOne(id);
+			if (user.isPresent()) {
+				return ResponseEntity.ok().body(user.get());
 			}
 			return ResponseEntity.notFound().build();
 		};
@@ -71,30 +39,26 @@ public class UserController {
 	@PostMapping()
 	Callable<ResponseEntity> add(@RequestBody User user) {
 		return () -> {
-			if (user == null) {
-				return ResponseEntity.badRequest().build();
+			try {
+				User savedUser = service.add(user);
+				Long id = savedUser.getId();
+				URI uri = new URI("users/" + id.toString());
+				return ResponseEntity.created(uri).build();
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.toString());
 			}
-			logUserState("User to add", user);
-			if (!isValidUser(user)) {
-				return ResponseEntity.badRequest().body("User is invalid!");
-			}
-			User savedUser = repository.save(user);
-			logUserState("Saved user", savedUser);
-			Long id = savedUser.getId();
-			URI uri = new URI("users/" + id.toString());
-
-			return ResponseEntity.created(uri).build();
 		};
 	}
 
 	@DeleteMapping(value = "{id}")
 	Callable<ResponseEntity> remove(@PathVariable Long id) {
 		return () -> {
-			if (!repository.exists(id)) {
-				return ResponseEntity.notFound().build();
+			try {
+				service.remove(id);
+				return ResponseEntity.ok().build();
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.toString());
 			}
-			repository.delete(id);
-			return ResponseEntity.ok().build();
 		};
 	}
 
@@ -106,23 +70,12 @@ public class UserController {
 	@PatchMapping()
 	Callable<ResponseEntity> update(@RequestBody User user) {
 		return () -> {
-			if (user == null) {
-				return ResponseEntity.badRequest().build();
+			try {
+				service.update(user);
+				return ResponseEntity.ok().build();
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.toString());
 			}
-			if (!repository.exists(user.getId())) {
-				return ResponseEntity.notFound().build();
-			}
-			logUserState("User to update", user);
-			if (!isValidUser(user)) {
-				return ResponseEntity.badRequest().body("User is invalid!");
-			}
-			User localUser = repository.findOne(user.getId());
-			logUserState("User in repository", localUser);
-			localUser.setName(user.getName());
-			updateUserItems(localUser, user.getItems());
-			User savedUser = repository.save(localUser);
-			logUserState("Updated user", savedUser);
-			return ResponseEntity.ok().build();
 		};
 	}
 }
