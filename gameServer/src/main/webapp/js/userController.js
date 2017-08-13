@@ -174,7 +174,7 @@ var UserController = (function () {
         var row = document.createElement("tr");
         this.appendTableElement(row, this.createInput("Item Name", item.name));
         this.appendTableElement(row, this.createInput("Item Count", item.count.toString()));
-        this.appendTableElement(row, this.createButton("Remove", function () { return _this.removeItem(row, user, item); }));
+        this.appendTableElement(row, this.createButton("-", function () { return _this.removeItem(row, user, item); }));
         this.itemList.appendChild(row);
     };
     UserController.prototype.removeItem = function (element, user, item) {

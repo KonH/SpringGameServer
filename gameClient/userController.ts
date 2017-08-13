@@ -209,7 +209,7 @@ class UserController {
 		this.appendTableElement(
 			row, this.createInput("Item Count", item.count.toString()));
 		this.appendTableElement(row, this.createButton(
-			"Remove", () => this.removeItem(row, user, item)
+			"-", () => this.removeItem(row, user, item)
 		));
 		this.itemList.appendChild(row);
 	}
