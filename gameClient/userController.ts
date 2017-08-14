@@ -50,7 +50,7 @@ class UserController {
 
 	clearUser() {
 		this.nameInput.value = "";
-		this.clearChilds(this.itemList);
+		Utils.clearChilds(this.itemList);
 	}
 
 	addUser() {
@@ -82,12 +82,6 @@ class UserController {
 		});
 	}
 
-	clearChilds(element : HTMLElement) {
-		while (element.firstChild) {
-			element.removeChild(element.firstChild);
-		}
-	}
-
 	onUsersRetrieved(data) {
 		logger.log("UC: on users retrieved: " + data);
 		let users : User[] = [];
@@ -98,7 +92,7 @@ class UserController {
 				element["items"]);
 			users.push(user);
 		});
-		this.clearChilds(this.userList);
+		Utils.clearChilds(this.userList);
 		logger.log("UC: retrieved users: " + users.length);
 		users.forEach((user) => this.appendUser(user));
 	}

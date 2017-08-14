@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Users</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Items</th>
+            <th>Controls</th>
+        </tr>
+        </thead>
+        <tbody id="user-list">
+        </tbody>
+    </table>
+</div>
+
+<div style="container">
+    <div class="container input-group" style="max-width: 400px; margin-left: 60px">
+        <input id="user-name" type="text" class="form-control" placeholder="Username">
+        <table id="user-items"></table>
+        <button id="user-add-item-btn" type="button" class="btn btn-default">+</button>
+        <button id="user-add-btn" type="button" class="btn btn-default">Add</button>
+        <button id="user-update-btn" type="button" class="btn btn-default">Update</button>
+        <button id="user-refresh-btn" type="button" class="btn btn-default">Refresh</button>
+    </div>
+</div>
+<script>
+    jQuery.getScript("js/item.js");
+    jQuery.getScript("js/user.js");
+    jQuery.getScript("js/userController.js");
+</script>

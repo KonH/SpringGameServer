@@ -36,7 +36,7 @@ var UserController = (function () {
     };
     UserController.prototype.clearUser = function () {
         this.nameInput.value = "";
-        this.clearChilds(this.itemList);
+        Utils.clearChilds(this.itemList);
     };
     UserController.prototype.addUser = function () {
         var _this = this;
@@ -67,11 +67,6 @@ var UserController = (function () {
             success: function (data) { return _this.onUsersRetrieved(data); }
         });
     };
-    UserController.prototype.clearChilds = function (element) {
-        while (element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
-    };
     UserController.prototype.onUsersRetrieved = function (data) {
         var _this = this;
         logger.log("UC: on users retrieved: " + data);
@@ -80,7 +75,7 @@ var UserController = (function () {
             var user = new User(element["id"], element["name"], element["items"]);
             users.push(user);
         });
-        this.clearChilds(this.userList);
+        Utils.clearChilds(this.userList);
         logger.log("UC: retrieved users: " + users.length);
         users.forEach(function (user) { return _this.appendUser(user); });
     };
