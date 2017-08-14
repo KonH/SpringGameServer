@@ -14,11 +14,30 @@ public class User {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@MapKey(name = "items")
 	private List<Item> items = new ArrayList<>();
 
 	public User() {
+	}
+
+	public User(Long id) {
+		this.id = id;
+	}
+
+	public User(String name) {
+		this.name = name;
+	}
+
+	public User(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	public User(Long id, String name, List<Item> items) {
+		this.id = id;
+		this.name = name;
+		this.items = items;
 	}
 
 	public User(String name, List<Item> items) {
@@ -31,11 +50,16 @@ public class User {
 		String str = "";
 		str += "id: " + id + "\n";
 		str += "name: '" + name + "'\n";
-		str += "items (" + items.size() + "):\n";
-		for (Item item : items) {
-			str += "{ id: " + item.getId() +
-					", name: '" + item.getName() +
-					"', count: " + item.getCount() + " }";
+		str += "items:\n";
+		if (items != null) {
+			str += items.size() + "\n";
+			for (Item item : items) {
+				str += "{ id: " + item.getId() +
+						", name: '" + item.getName() +
+						"', count: " + item.getCount() + " }\n";
+			}
+		} else {
+			str += "null";
 		}
 		return str;
 	}

@@ -5,6 +5,7 @@ import com.konh.gameServer.models.User;
 import com.konh.gameServer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class UserService {
 		if (items == null) {
 			return false;
 		}
+		HashSet<String> nameUsages = new HashSet<>();
 		for (Item item : items) {
 			if (item == null) {
 				return false;
@@ -39,9 +41,13 @@ public class UserService {
 			if (!isValidString(item.getName())) {
 				return false;
 			}
+			if (nameUsages.contains(item.getName())) {
+				return false;
+			}
 			if (item.getCount() <= 0) {
 				return false;
 			}
+			nameUsages.add(item.getName());
 		}
 		return true;
 	}
@@ -68,7 +74,7 @@ public class UserService {
 		return savedUser;
 	}
 
-	public void remove(Long id) throws IllegalArgumentException  {
+	public void remove(Long id) throws IllegalArgumentException {
 		if (!repository.exists(id)) {
 			throw new IllegalArgumentException("User is not exist!");
 		}
