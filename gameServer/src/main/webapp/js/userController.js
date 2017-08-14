@@ -1,9 +1,11 @@
 var UserController = (function () {
     function UserController() {
+        logger.log("UC: start init");
         this.initElements();
         this.loadUsers();
         this.updateButtonStates(true, false);
         this.curUser = new User(0, "", []);
+        logger.log("UC: inited");
     }
     UserController.prototype.getElementById = function (id) {
         return document.getElementById(id);
@@ -42,6 +44,7 @@ var UserController = (function () {
         var user = this.curUser;
         user.name = name;
         this.readItems();
+        logger.log("UC: add user: " + user);
         var userContent = JSON.stringify(user);
         jQuery.ajax({
             type: "POST",
@@ -55,6 +58,7 @@ var UserController = (function () {
     };
     UserController.prototype.loadUsers = function () {
         var _this = this;
+        logger.log("UC: load users");
         jQuery.ajax({
             type: "GET",
             url: "/users",
@@ -70,12 +74,14 @@ var UserController = (function () {
     };
     UserController.prototype.onUsersRetrieved = function (data) {
         var _this = this;
+        logger.log("UC: on users retrieved: " + data);
         var users = [];
         data.forEach(function (element) {
             var user = new User(element["id"], element["name"], element["items"]);
             users.push(user);
         });
         this.clearChilds(this.userList);
+        logger.log("UC: retrieved users: " + users.length);
         users.forEach(function (user) { return _this.appendUser(user); });
     };
     UserController.prototype.appendTableElement = function (row, content) {
@@ -120,6 +126,7 @@ var UserController = (function () {
         var name = this.nameInput.value;
         this.curUser.name = name;
         this.readItems();
+        logger.log("UC: update user: " + this.curUser);
         var userContent = JSON.stringify(this.curUser);
         jQuery.ajax({
             type: "PATCH",
@@ -135,6 +142,7 @@ var UserController = (function () {
     };
     UserController.prototype.deleteUser = function (id) {
         var _this = this;
+        logger.log("UC: delete user: " + id);
         jQuery.ajax({
             type: "DELETE",
             url: "/users/" + id,

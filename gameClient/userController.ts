@@ -9,10 +9,12 @@ class UserController {
 	curUser : User;
 
 	constructor() {
+		logger.log("UC: start init");
 		this.initElements();
 		this.loadUsers();
 		this.updateButtonStates(true, false);
 		this.curUser = new User(0, "", []);
+		logger.log("UC: inited");
 	}
 
 	getElementById(id : string) : HTMLElement {
@@ -56,6 +58,7 @@ class UserController {
 		let user = this.curUser;
 		user.name = name;
 		this.readItems();
+		logger.log("UC: add user: " + user);
 		let userContent = JSON.stringify(user);
 		jQuery.ajax({
 			type: "POST",
@@ -69,6 +72,7 @@ class UserController {
 	}
 
 	loadUsers() {
+		logger.log("UC: load users");
 		jQuery.ajax({
 			type: "GET",
 			url: "/users",
@@ -85,6 +89,7 @@ class UserController {
 	}
 
 	onUsersRetrieved(data) {
+		logger.log("UC: on users retrieved: " + data);
 		let users : User[] = [];
 		data.forEach(element => {
 			var user = new User(
@@ -94,6 +99,7 @@ class UserController {
 			users.push(user);
 		});
 		this.clearChilds(this.userList);
+		logger.log("UC: retrieved users: " + users.length);
 		users.forEach((user) => this.appendUser(user));
 	}
 
@@ -148,6 +154,7 @@ class UserController {
 		let name = this.nameInput.value;
 		this.curUser.name = name;
 		this.readItems();
+		logger.log("UC: update user: " + this.curUser);
 		let userContent = JSON.stringify(this.curUser);
 		jQuery.ajax({
 			type: "PATCH",
@@ -163,6 +170,7 @@ class UserController {
 	}
 
 	deleteUser(id : number) {
+		logger.log("UC: delete user: " + id);
 		jQuery.ajax({
 			type: "DELETE",
 			url: "/users/" + id,
