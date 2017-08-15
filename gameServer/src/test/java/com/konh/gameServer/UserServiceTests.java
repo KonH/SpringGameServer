@@ -26,9 +26,6 @@ import static org.junit.Assert.*;
 public class UserServiceTests {
 
 	@Autowired
-	private Environment environment;
-
-	@Autowired
 	UserService userService;
 
 	@Rule
