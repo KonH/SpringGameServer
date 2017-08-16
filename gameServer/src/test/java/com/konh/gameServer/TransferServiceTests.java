@@ -60,4 +60,34 @@ public class TransferServiceTests {
 	public void transferSimple() throws NotEnoughItemCount {
 		transferService.makeTransfer(senderId, receiverId, new Item("item", 4));
 	}
+
+	@Test
+	public void transferNull() throws NotEnoughItemCount {
+		exception.expect(IllegalArgumentException.class);
+		transferService.makeTransfer(senderId, receiverId, null);
+	}
+
+	@Test
+	public void transferFromWrongUser() throws NotEnoughItemCount {
+		exception.expect(IllegalArgumentException.class);
+		transferService.makeTransfer(-10L, receiverId, new Item("item", 4));
+	}
+
+	@Test
+	public void transferToWrongUser() throws NotEnoughItemCount {
+		exception.expect(IllegalArgumentException.class);
+		transferService.makeTransfer(senderId, null, new Item("item", 4));
+	}
+
+	@Test
+	public void transferTooManyItems() throws NotEnoughItemCount {
+		exception.expect(NotEnoughItemCount.class);
+		transferService.makeTransfer(senderId, receiverId, new Item("item", 6));
+	}
+
+	@Test
+	public void transferNotOwnedItems() throws NotEnoughItemCount {
+		exception.expect(NotEnoughItemCount.class);
+		transferService.makeTransfer(senderId, receiverId, new Item("item2", 4));
+	}
 }

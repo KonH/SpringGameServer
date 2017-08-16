@@ -57,7 +57,7 @@ public class UserService {
 	}
 
 	public Optional<User> getOne(Long id) {
-		User user = repository.findOne(id);
+		User user = (id != null) ? repository.findOne(id) : null;
 		return Optional.ofNullable(user);
 	}
 
