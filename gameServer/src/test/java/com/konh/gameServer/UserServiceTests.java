@@ -157,6 +157,19 @@ public class UserServiceTests {
 	}
 
 	@Test
+	public void updateExistItems() {
+		User user = new User("user");
+		User savedUser = userService.add(user);
+		savedUser.getItems().add(new Item("test", 10));
+		User userToUpdate = new User(savedUser.getId(), user.getName(), savedUser.getItems());
+		userService.update(userToUpdate);
+
+		assertSame(
+				userService.getOne(savedUser.getId()).get().getItems().size(),
+				userToUpdate.getItems().size());
+	}
+
+	@Test
 	public void updateNull() {
 		User user = null;
 

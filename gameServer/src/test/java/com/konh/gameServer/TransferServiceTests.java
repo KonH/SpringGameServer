@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -59,6 +60,32 @@ public class TransferServiceTests {
 	@Test
 	public void transferSimple() throws NotEnoughItemCount {
 		transferService.makeTransfer(senderId, receiverId, new Item("item", 4));
+	}
+
+	@Test
+	public void transferWithAnotherRef() throws NotEnoughItemCount {
+		String itemName = new String("item");
+		transferService.makeTransfer(senderId, receiverId, new Item(itemName, 4));
+	}
+
+	@Test
+	public void transferItemsExist() throws NotEnoughItemCount {
+		String itemName = new String("item");
+		transferService.makeTransfer(senderId, receiverId, new Item(itemName, 4));
+
+		Optional<User> senderUserOpt = userService.getOne(senderId);
+		assertTrue(senderUserOpt.isPresent());
+		User senderUser = senderUserOpt.get();
+		List<Item> senderItems = senderUser.getItems();
+		assertTrue(senderItems != null);
+		assertTrue(senderItems.size() > 0);
+
+		Optional<User> receiverUserOpt = userService.getOne(receiverId);
+		assertTrue(receiverUserOpt.isPresent());
+		User receiverUser = receiverUserOpt.get();
+		List<Item> receiverItems = receiverUser.getItems();
+		assertTrue(receiverItems != null);
+		assertTrue(receiverItems.size() > 0);
 	}
 
 	@Test

@@ -5,6 +5,7 @@ import com.konh.gameServer.models.User;
 import com.konh.gameServer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -82,8 +83,10 @@ public class UserService {
 	}
 
 	void updateUserItems(User user, List<Item> items) {
+		List<Item> tempItems = new ArrayList<>();
+		tempItems.addAll(items);
 		user.getItems().clear();
-		user.getItems().addAll(items);
+		user.getItems().addAll(tempItems);
 	}
 
 	public void update(User user) throws IllegalArgumentException {

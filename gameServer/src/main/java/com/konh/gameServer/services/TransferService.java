@@ -15,7 +15,7 @@ public class TransferService {
 
 	Optional<Item> findItemByName(User user, String name) {
 		return user.getItems().stream().
-				filter(it -> it.getName() == name).findFirst();
+				filter(it -> it.getName().equals(name)).findFirst();
 	}
 
 	public void makeTransfer(Long fromId, Long toId, Item item) throws NotEnoughItemCount {
@@ -41,7 +41,7 @@ public class TransferService {
 		userService.update(fromUser);
 
 		User toUser = toUserOpt.get();
-		Optional<Item> toUserItemOpt = findItemByName(fromUser, item.getName());
+		Optional<Item> toUserItemOpt = findItemByName(toUser, item.getName());
 		if (toUserItemOpt.isPresent()) {
 			Item toUserItem = toUserItemOpt.get();
 			toUserItem.setCount(toUserItem.getCount() + item.getCount());
