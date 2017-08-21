@@ -79,6 +79,7 @@ var UserController = (function () {
         logger.log("UC: retrieved users: " + users.length);
         users.forEach(function (user) { return _this.appendUser(user); });
         this.resetCurrentUser();
+        transferController.update(users);
     };
     UserController.prototype.appendTableElement = function (row, content) {
         var item = document.createElement("td");

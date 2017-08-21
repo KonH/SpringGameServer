@@ -14,8 +14,8 @@
     </table>
 </div>
 
-<div style="container">
-    <div class="container input-group" style="max-width: 400px; margin-left: 60px">
+<div class="container">
+    <div class="container input-group" style="max-width: 400px; margin-left: 0px;">
         <input id="user-name" type="text" class="form-control" placeholder="Username">
 
         <div style="margin-top:5px"></div>
@@ -38,8 +38,32 @@
         </div>
     </div>
 </div>
+
+<div class="container" style="margin-top: 25px; margin-left: 70px;">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="from_toggle">
+            From: <span class="selection" id="from_selected">none</span><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" id="from_list">
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="to_toggle">
+            To: <span class="selection" id="to_selected">none</span><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" id="to_list">
+        </ul>
+    </div>
+    <div style="max-width: 200px; margin-top: 10px; margin-bottom: 10px;">
+        <input class="form-control" id="transfer_item_name" placeholder="Item Name"/>
+        <input class="form-control" id="transfer_item_count" style="margin-top: 10px;" placeholder="Item Count"/>
+    </div>
+    <button id="transfer-btn" type="button" class="btn btn-default" onclick="transferController.apply()">Send</button>
+</div>
+
 <script>
     jQuery.getScript("js/item.js");
     jQuery.getScript("js/user.js");
     jQuery.getScript("js/userController.js");
+    jQuery.getScript("js/transferController.js");
 </script>

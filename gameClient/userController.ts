@@ -96,6 +96,8 @@ class UserController {
 		logger.log("UC: retrieved users: " + users.length);
 		users.forEach((user) => this.appendUser(user));
 		this.resetCurrentUser();
+		
+		transferController.update(users);
 	}
 
 	appendTableElement(row : HTMLElement, content : HTMLElement) {
