@@ -48,7 +48,7 @@ class UserController {
 		this.updateButton.style.display = canUpdate ? "block" : "none";
 	}
 
-	clearUser() {
+	resetCurrentUser() {
 		this.nameInput.value = "";
 		Utils.clearChilds(this.itemList);
 	}
@@ -68,7 +68,7 @@ class UserController {
 			dataType: "text",
 			success: () => this.loadUsers()
 		}).fail(() => alert( "Failed to add!" ));
-		this.clearUser();
+		this.resetCurrentUser();
 	}
 
 	loadUsers() {
@@ -95,6 +95,7 @@ class UserController {
 		Utils.clearChilds(this.userList);
 		logger.log("UC: retrieved users: " + users.length);
 		users.forEach((user) => this.appendUser(user));
+		this.resetCurrentUser();
 	}
 
 	appendTableElement(row : HTMLElement, content : HTMLElement) {
@@ -159,7 +160,7 @@ class UserController {
 			success: () => this.loadUsers()
 		}).fail(() => alert( "Failed to update!" ));
 		this.updateButtonStates(true, false);
-		this.clearUser();
+		this.resetCurrentUser();
 		this.curUser = new User(0, "", []);
 	}
 
@@ -188,6 +189,7 @@ class UserController {
 		user.items.forEach((item) => 
 			this.appendItem(user, item)
 		);
+
 	}
 
 	readItems() {

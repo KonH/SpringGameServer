@@ -34,7 +34,7 @@ var UserController = (function () {
         this.addButton.style.display = canAdd ? "block" : "none";
         this.updateButton.style.display = canUpdate ? "block" : "none";
     };
-    UserController.prototype.clearUser = function () {
+    UserController.prototype.resetCurrentUser = function () {
         this.nameInput.value = "";
         Utils.clearChilds(this.itemList);
     };
@@ -54,7 +54,7 @@ var UserController = (function () {
             dataType: "text",
             success: function () { return _this.loadUsers(); }
         }).fail(function () { return alert("Failed to add!"); });
-        this.clearUser();
+        this.resetCurrentUser();
     };
     UserController.prototype.loadUsers = function () {
         var _this = this;
@@ -78,6 +78,7 @@ var UserController = (function () {
         Utils.clearChilds(this.userList);
         logger.log("UC: retrieved users: " + users.length);
         users.forEach(function (user) { return _this.appendUser(user); });
+        this.resetCurrentUser();
     };
     UserController.prototype.appendTableElement = function (row, content) {
         var item = document.createElement("td");
@@ -132,7 +133,7 @@ var UserController = (function () {
             success: function () { return _this.loadUsers(); }
         }).fail(function () { return alert("Failed to update!"); });
         this.updateButtonStates(true, false);
-        this.clearUser();
+        this.resetCurrentUser();
         this.curUser = new User(0, "", []);
     };
     UserController.prototype.deleteUser = function (id) {
